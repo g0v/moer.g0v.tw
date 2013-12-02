@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>焚化廠空污檢測資料</title>
+        <style type="text/css" media="screen">
+            .bar {
+                fill: steelblue;
+            }
+            .chart text {
+                fill: white;
+            }
+        </style>
+    </head>
+    <body>
+        <svg class="chart"></svg>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+            var width = 960,
+                barHeight = 20;
+
+            var x = d3.scale.linear()
+                .range([0, width]);
+
+            var chart = d3.select(".chart")
+                .attr("width", width);
+
+            //d3.json("http://opendata.epa.gov.tw/ws/Data/SWIMSAir/?$orderby=ReportDate%20desc&$skip=0&$top=1000&format=json", function(error, data) {
+            d3.json("incinerator-air-polution.json", function(error, data) {
+                x.domain([0, d3.max(data, function(d) { return +d.NOx; })]);
+
+                chart.attr("height", barHeight * data.length);
+
+                var bar = chart.selectAll("g")
+                    .data(data)
+                    .enter().append("g")
+                    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+                bar.append("rect")
+                    .attr("class", "bar")
+                    .attr("width", function(d) { return x(+d.NOx); })
+                    .attr("height", barHeight - 1);
+
+                bar.append("text")
+                    .attr("x", function(d) { return x(+d.NOx) - d.NOx.length * 9; })
+                    .attr("y", barHeight / 2)
+                    .attr("dy", ".3em")
+                    .text(function(d) { return d.NOx; });
+
+                bar.append("text")
+                    .attr("x", 0)
+                    .attr("y", barHeight / 2)
+                    .attr("dy", ".3em")
+                    .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
+            });
+        </script>
+    </body>
+</html>
