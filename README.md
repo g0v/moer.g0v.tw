@@ -1,4 +1,4 @@
 epa-visual
 ==========
 
-Visualization of data.epa.gov.tw data
+Visualizations for <http://opendata.epa.gov.tw/> data.
