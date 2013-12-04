@@ -3,19 +3,18 @@ var epaIncineratorApp = angular.module("epaIncineratorApp", []);
 
 epaIncineratorApp.controller("ChartCtrl", function($scope, $http) {
   $scope.data = [];
-  $scope.reloadJSON = function() {
-    $http.get("incinerator-air-polution.json")
-    .success(function(data) {
-      $scope.data = data;
-    })
-    .error(function(data, status) {
-      if (status == 404) {
-        $scope.error = "Not found";
-      } else {
-        $scope.error = "Error: " + status;
-      }
-    });
-  };
+
+  $http.get("incinerator-air-polution.json")
+  .success(function(data) {
+    $scope.data = data;
+  })
+  .error(function(data, status) {
+    if (status == 404) {
+      $scope.error = "Not found";
+    } else {
+      $scope.error = "Error: " + status;
+    }
+  });
 });
 
 epaIncineratorApp.directive('epaVisual', function() {
@@ -30,7 +29,13 @@ epaIncineratorApp.directive('epaVisual', function() {
     },
     link: function(scope, element, attrs) {
       var x = d3.scale.linear()
-        .range([0, width]);
+        .range([0, width])
+        .domain([0, 150]);
+
+      var chart = d3.select("epa-visual")
+        .append("svg")
+        .attr("class", "chart")
+        .attr("width", width);
 
       scope.$watch('data', function(newVal, oldVal) {
         var data = newVal;
@@ -39,17 +44,21 @@ epaIncineratorApp.directive('epaVisual', function() {
           return;
         }
 
-        var chart = d3.select("epa-visual")
-          .append("svg")
-          .attr("class", "chart")
-          .attr("width", width);
-
-        x.domain([0, d3.max(data, function(d) { return +d.NOx; })]);
-
         chart.attr("height", barHeight * data.length);
 
-        var bar = chart.selectAll("g")
-          .data(data)
+        var barSelection = chart.selectAll("g")
+          .data(data);
+
+        barSelection.select("rect")
+          .attr("width", function(d) { return x(+d.NOx); });
+        barSelection.select("text.substance-value")
+          .attr("x", function(d) { return x(+d.NOx) - d.NOx.length * 9; })
+          .text(function(d) { return d.NOx; });
+
+        barSelection.select("text.incinerator-name")
+          .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
+
+        var bar = barSelection
           .enter().append("g")
           .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 
@@ -59,17 +68,22 @@ epaIncineratorApp.directive('epaVisual', function() {
           .attr("height", barHeight - 1);
 
         bar.append("text")
+          .attr("class", "substance-value")
           .attr("x", function(d) { return x(+d.NOx) - d.NOx.length * 9; })
           .attr("y", barHeight / 2)
           .attr("dy", ".35em")
           .text(function(d) { return d.NOx; });
 
         bar.append("text")
+          .attr("class", "incinerator-name")
           .attr("x", 0)
           .attr("y", barHeight / 2)
           .attr("dx", ".2em")
           .attr("dy", ".35em")
           .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
+
+        barSelection.exit()
+            .remove();
       });
 
     }
