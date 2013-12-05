@@ -33,12 +33,16 @@ epaIncineratorApp.directive('epaVisual', function() {
 
   function drawBarChart(data, substance = "NOx") {
 
-    var scales = {
-      "NOx": 200,
-      "SOx": 20
+    var limits = {
+      NOx: 180,
+      SOx: 80,
+      COx: 120,
+      HCl: 40,
+      Dust: 81,
+      Opacity: 10
     };
 
-    x.domain([0, scales[substance]]);
+    x.domain([0, limits[substance] * 1.5]);
 
     var barSelection = chart.selectAll("g")
       .data(data);
