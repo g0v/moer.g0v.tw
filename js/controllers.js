@@ -5,12 +5,15 @@ var incineratorAirCtrl = angular.module('envControllers', [])
 
     $http.get("data/incinerator-air-polution.json")
     .success(function(data) {
-      incinerators = {};
+      var incinerators = {},
+          reportDates = {};
       data.forEach(function (d) {
-        incinerators[d.IncineratorName] = 1;
+        incinerators[d.IncineratorName.trim()] = 1;
+        reportDates[d.ReportDate] = 1;
       });
       $scope.data = data;
       $scope.incinerators = Object.keys(incinerators);
+      $scope.reportDates = Object.keys(reportDates);
     })
     .error(function(data, status) {
       if (status == 404) {

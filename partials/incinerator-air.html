@@ -1,6 +1,11 @@
 <form>
   <select ng-model="query">
+    <option value="">-- 焚化爐 --</option>
     <option value="{{c}}" ng-repeat="c in incinerators">{{c}}</option>
+  </select>
+  <select ng-model="reportDate">
+    <option value="">-- 月份 --</option>
+    <option value="{{d}}" ng-repeat="d in reportDates">{{d}}</option>
   </select>
   <input type="radio" ng-model="subs" value="NOx" id="nox"/><label for="nox">NOx</label>
   <input type="radio" ng-model="subs" value="SOx" id="sox"/><label for="nox">SOx</label>
@@ -10,5 +15,5 @@
   <input type="radio" ng-model="subs" value="Opacity" id="opacity"/><label for="nox">Opacity</label>
 </form>
 <div ng-show="error">{{error}}</div>
-<epa-visual class="chart" data="data|filter:query" substance="subs"></epa-visual>
+<epa-visual class="chart" data="data|filter:query|filter:reportDate" substance="subs"></epa-visual>
 <p>Incinerator air polution data retrieved from <a href="http://opendata.epa.gov.tw/ws/Data/SWIMSAir/?1orderby=ReportDate%20desc11skip=011top=10001format=json">here</a>.</p>
