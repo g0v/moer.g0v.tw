@@ -25,75 +25,95 @@ var incineratorCtrl = angular.module('moerControllers', [])
   }])
   .directive('epaVisual', function() {
 
-    var width = 960,
+    var margin = {
+      top: 20,
+      bottom: 0,
+      left: 0,
+      right: 0
+    };
+
+    var limits = {
+      NOx: 180,
+      SOx: 80,
+      COx: 120,
+      HCl: 40,
+      Dust: 81,
+      Opacity: 10
+    };
+
+    var width = 640,
         barHeight = 25;
 
     var x = d3.scale.linear()
       .range([0, width]);
 
-    var chart = d3.select("epa-visual")
+    var canvas = d3.select("epa-visual")
       .append("svg")
-      .attr("class", "chart")
-      .attr("width", width);
+        .attr("class", "chart")
+        .attr("width", width);
+
+    var chart = canvas.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var limitLine = chart.append("line")
+        .attr("class", "limit-line")
+        .attr("y1", 0)
+        .attr("stroke", "black")
+        .attr("stroke-width", 2);
+
+    var limitMeasure = canvas.append("text")
+        .attr("dx", "-1em")
+        .attr("dy", ".9em");
 
     function drawPollutionBarChart(data, substance = "NOx") {
 
-      var limits = {
-        NOx: 180,
-        SOx: 80,
-        COx: 120,
-        HCl: 40,
-        Dust: 81,
-        Opacity: 10
-      };
-
       x.domain([0, limits[substance] * 1.2]);
-
-      chart.append("line")
-        .attr("x1", x(limits[substance]))
-        .attr("x2", x(limits[substance]))
-        .attr("y1", 0)
-        .attr("y2", barHeight * data.length)
-        .attr("stroke", "black")
-        .attr("stroke-width", 2);
 
       var barSelection = chart.selectAll("g")
         .data(data);
 
+      limitLine.attr("x1", x(limits[substance]))
+          .attr("x2", x(limits[substance]))
+          .attr("y2", barHeight * data.length);
+
+      limitMeasure.text(limits[substance])
+          .attr("transform", "translate(" + x(limits[substance]) + ",0)");
+
       barSelection.select("rect")
-        .attr("width", function(d) { return x(+d[substance]); });
+          .attr("width", function(d) { return x(+d[substance]); });
       barSelection.select("text.substance-value")
-        .attr("x", function(d) { return x(+d[substance]) + 4; })
-        .text(function(d) { return d[substance]; });
+          .attr("x", function(d) { return x(+d[substance]) + 4; })
+          .text(function(d) { return d[substance]; });
 
       barSelection.select("text.incinerator-name")
-        .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
+          .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
 
       var bar = barSelection
         .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+          .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 
       bar.append("rect")
-        .attr("class", "bar")
-        .attr("width", function(d) { return x(+d[substance]); })
-        .attr("height", barHeight - 1);
+          .attr("class", "bar")
+          .attr("width", function(d) { return x(+d[substance]); })
+          .attr("height", barHeight - 1);
 
       bar.append("text")
-        .attr("class", "substance-value")
-        .attr("x", function(d) { return x(+d[substance]) + 4; })
-        .attr("y", barHeight / 2)
-        .attr("dy", ".35em")
-        .text(function(d) { return d[substance]; });
+          .attr("class", "substance-value")
+          .attr("x", function(d) { return x(+d[substance]) + 4; })
+          .attr("y", barHeight / 2)
+          .attr("dy", ".35em")
+          .text(function(d) { return d[substance]; });
 
       bar.append("text")
-        .attr("class", "incinerator-name")
-        .attr("x", 0)
-        .attr("y", barHeight / 2)
-        .attr("dx", ".2em")
-        .attr("dy", ".35em")
-        .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
+          .attr("class", "incinerator-name")
+          .attr("x", 0)
+          .attr("y", barHeight / 2)
+          .attr("dx", ".2em")
+          .attr("dy", ".35em")
+          .text(function(d) { return d.IncineratorName + " (" + d.ReportDate + ")"; });
 
-      barSelection.exit()
+      barSelection
+        .exit()
           .remove();
     }
 
@@ -106,7 +126,7 @@ var incineratorCtrl = angular.module('moerControllers', [])
       link: function(scope, element, attrs) {
         scope.$watch('data', function(newVal, oldVal) {
           if (!newVal) return;
-          chart.attr("height", barHeight * newVal.length);
+          canvas.attr("height", barHeight * newVal.length + margin.top + margin.bottom);
           drawPollutionBarChart(newVal, scope.substance);
         });
         scope.$watch('substance', function(newVal, oldVal) {
