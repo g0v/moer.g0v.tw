@@ -24,7 +24,7 @@ var incineratorCtrl = angular.module('moerControllers', [])
       }
     });
   }])
-  .directive('epaVisual', function() {
+  .directive('moerIncinerator', function() {
 
     var margin = {
       top: 20,
@@ -48,7 +48,7 @@ var incineratorCtrl = angular.module('moerControllers', [])
     var x = d3.scale.linear()
       .range([0, width]);
 
-    var canvas = d3.select("epa-visual")
+    var canvas = d3.select("moer-incinerator")
       .append("svg")
         .attr("class", "chart")
         .attr("width", width);
