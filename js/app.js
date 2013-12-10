@@ -6,7 +6,7 @@ angular.module('envDashboardApp', [
     $routeProvider
       .when('/incinerator', {
         templateUrl: 'partials/incinerator-air.html',
-        controller: 'IncineratorAirChartCtrl'
+        controller: 'IncineratorAirCtrl'
       })
       .otherwise({
         redirectTo: '/'

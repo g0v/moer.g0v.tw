@@ -1,11 +1,16 @@
-angular.module('envControllers', [])
-  .controller("IncineratorAirChartCtrl", ['$scope', '$http', function($scope, $http) {
+var incineratorAirCtrl = angular.module('envControllers', [])
+  .controller("IncineratorAirCtrl", ['$scope', '$http', function($scope, $http) {
     $scope.data = [];
     $scope.substance = 'NOx';
 
     $http.get("data/incinerator-air-polution.json")
     .success(function(data) {
+      incinerators = {};
+      data.forEach(function (d) {
+        incinerators[d.IncineratorName] = 1;
+      });
       $scope.data = data;
+      $scope.incinerators = Object.keys(incinerators);
     })
     .error(function(data, status) {
       if (status == 404) {
@@ -89,17 +94,12 @@ angular.module('envControllers', [])
       },
       link: function(scope, element, attrs) {
         scope.$watch('data', function(newVal, oldVal) {
-          var data = newVal;
-          if (!data) {
-            return;
-          }
-          chart.attr("height", barHeight * data.length);
-          drawBarChart(data, scope.substance);
+          if (!newVal) return;
+          chart.attr("height", barHeight * newVal.length);
+          drawBarChart(newVal, scope.substance);
         });
         scope.$watch('substance', function(newVal, oldVal) {
-          if (!newVal) {
-            return;
-          }
+          if (!newVal) return;
           scope.substance = newVal;
           drawBarChart(scope.data, newVal);
         });
