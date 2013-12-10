@@ -2,6 +2,7 @@ var incineratorCtrl = angular.module('moerControllers', [])
   .controller("IncineratorCtrl", ['$scope', '$http', function($scope, $http) {
     $scope.data = [];
     $scope.substance = 'NOx';
+    $scope.reportDate = '2013-09';
 
     $http.get("data/incinerator-air-polution.json")
     .success(function(data) {

@@ -9,6 +9,6 @@ angular.module('moerDashboardApp', [
         controller: 'IncineratorCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/incinerator'
       });
   }]);
