@@ -1,0 +1,38 @@
+{
+  "status": "alpha",
+  "name": "moer.g0v.tw",
+  "name_zh": "環境儀表板",
+  "description": "",
+  "description_zh": "",
+  "document": "",
+  "homepage": "http://moer.g0v.tw/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pm5/moer.g0v.tw"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "keywords": [
+    "javascript",
+    "angularjs",
+    "d3js",
+    "bootstrap",
+    "data visualization"
+  ],
+  "audience": [
+    "public"
+  ],
+  "products": [
+    "website"
+  ],
+  "projects": [
+    "environment"
+  ],
+  "needs": [
+    "designer",
+    "programmer"
+  ]
+}
