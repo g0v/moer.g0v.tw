@@ -6,7 +6,7 @@
   <head ng-app="envDashboardApp">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>焚化廠空污檢測資料</title>
+    <title>環境儀表板</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -39,25 +39,28 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">土地 <b class="caret"></b></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">水 <b class="caret"></b></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">空氣 <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/incinerator">焚化爐空污</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">天氣 <b class="caret"></b></a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">能源 <b class="caret"></b></a>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">污染 <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">焚化爐空污</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">廢棄物 <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">生態 <b class="caret"></b></a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">災害 <b class="caret"></b></a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">生態 <b class="caret"></b></a>
             </li>
           </ul>
         </div><!--/.navbar-collapse -->
@@ -72,7 +75,13 @@
       <footer>
       <!-- <p>&copy; Company 2013</p> -->
       </footer>
-    </div>
+    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
+
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

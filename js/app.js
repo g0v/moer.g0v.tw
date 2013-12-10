@@ -9,6 +9,6 @@ angular.module('envDashboardApp', [
         controller: 'IncineratorAirChartCtrl'
       })
       .otherwise({
-        redirectTo: '/incinerator'
+        redirectTo: '/'
       });
   }]);
