@@ -1,5 +1,5 @@
-var incineratorAirCtrl = angular.module('envControllers', [])
-  .controller("IncineratorAirCtrl", ['$scope', '$http', function($scope, $http) {
+var incineratorCtrl = angular.module('envControllers', [])
+  .controller("IncineratorCtrl", ['$scope', '$http', function($scope, $http) {
     $scope.data = [];
     $scope.substance = 'NOx';
 
