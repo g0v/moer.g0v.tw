@@ -49,13 +49,21 @@ var incineratorCtrl = angular.module('moerControllers', [])
 
       x.domain([0, limits[substance] * 1.2]);
 
+      chart.append("line")
+        .attr("x1", x(limits[substance]))
+        .attr("x2", x(limits[substance]))
+        .attr("y1", 0)
+        .attr("y2", barHeight * data.length)
+        .attr("stroke", "black")
+        .attr("stroke-width", 2);
+
       var barSelection = chart.selectAll("g")
         .data(data);
 
       barSelection.select("rect")
         .attr("width", function(d) { return x(+d[substance]); });
       barSelection.select("text.substance-value")
-        .attr("x", function(d) { return x(+d[substance]) - d[substance].length * 9; })
+        .attr("x", function(d) { return x(+d[substance]) + 4; })
         .text(function(d) { return d[substance]; });
 
       barSelection.select("text.incinerator-name")
@@ -72,7 +80,7 @@ var incineratorCtrl = angular.module('moerControllers', [])
 
       bar.append("text")
         .attr("class", "substance-value")
-        .attr("x", function(d) { return x(+d[substance]) - d[substance].length * 9; })
+        .attr("x", function(d) { return x(+d[substance]) + 4; })
         .attr("y", barHeight / 2)
         .attr("dy", ".35em")
         .text(function(d) { return d[substance]; });

@@ -1,6 +1,9 @@
 .bar {
   fill: darkred;
 }
-.chart text {
+.chart text.incinerator-name {
   fill: white;
+}
+.chart text.substance-value {
+  fill: black;
 }
