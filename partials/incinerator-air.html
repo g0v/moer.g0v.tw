@@ -1,13 +1,11 @@
 <form>
   <input ng-model="query">
-  <select ng-model="subs">
-    <option value="NOx">NOx</option>
-    <option value="SOx">SOx</option>
-    <option value="COx">COx</option>
-    <option value="HCl">HCl</option>
-    <option value="Dust">Dust</option>
-    <option value="Opacity">Opacity</option>
-  </select>
+  <input type="radio" ng-model="subs" value="NOx" id="nox"/><label for="nox">NOx</label>
+  <input type="radio" ng-model="subs" value="SOx" id="sox"/><label for="nox">SOx</label>
+  <input type="radio" ng-model="subs" value="COx" id="cox"/><label for="nox">COx</label>
+  <input type="radio" ng-model="subs" value="HCl" id="hcl"/><label for="nox">HCl</label>
+  <input type="radio" ng-model="subs" value="Dust" id="dust"/><label for="nox">Dust</label>
+  <input type="radio" ng-model="subs" value="Opacity" id="opacity"/><label for="nox">Opacity</label>
 </form>
 <div ng-show="error">{{error}}</div>
 <epa-visual class="chart" data="data|filter:query" substance="subs"></epa-visual>
