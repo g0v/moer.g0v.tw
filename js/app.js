@@ -1,6 +1,6 @@
-angular.module('envDashboardApp', [
+angular.module('moerDashboardApp', [
   'ngRoute',
-  'envControllers'
+  'moerControllers'
   ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
