@@ -36,7 +36,7 @@ var incineratorCtrl = angular.module('envControllers', [])
       .attr("class", "chart")
       .attr("width", width);
 
-    function drawBarChart(data, substance = "NOx") {
+    function drawPollutionBarChart(data, substance = "NOx") {
 
       var limits = {
         NOx: 180,
@@ -47,7 +47,7 @@ var incineratorCtrl = angular.module('envControllers', [])
         Opacity: 10
       };
 
-      x.domain([0, limits[substance] * 1.5]);
+      x.domain([0, limits[substance] * 1.2]);
 
       var barSelection = chart.selectAll("g")
         .data(data);
@@ -99,12 +99,12 @@ var incineratorCtrl = angular.module('envControllers', [])
         scope.$watch('data', function(newVal, oldVal) {
           if (!newVal) return;
           chart.attr("height", barHeight * newVal.length);
-          drawBarChart(newVal, scope.substance);
+          drawPollutionBarChart(newVal, scope.substance);
         });
         scope.$watch('substance', function(newVal, oldVal) {
           if (!newVal) return;
           scope.substance = newVal;
-          drawBarChart(scope.data, newVal);
+          drawPollutionBarChart(scope.data, newVal);
         });
       }
     };
