@@ -2,8 +2,8 @@
   "status": "alpha",
   "name": "moer.g0v.tw",
   "name_zh": "環境儀表板",
-  "description": "",
-  "description_zh": "",
+  "description": "Visualize environmental information about Taiwan.",
+  "description_zh": "環境資訊視覺化",
   "document": "",
   "homepage": "http://moer.g0v.tw/",
   "repository": {
