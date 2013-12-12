@@ -66,7 +66,8 @@ var incineratorCtrl = angular.module('moerControllers', [])
         .attr("dx", "-1em")
         .attr("dy", ".9em");
 
-    function drawPollutionBarChart(data, substance = "NOx") {
+    function drawPollutionBarChart(data, substance) {
+      if (!substance) substance = "NOx";
 
       x.domain([0, limits[substance] * 1.2]);
 
